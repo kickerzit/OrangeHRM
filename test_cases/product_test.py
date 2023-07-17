@@ -1,9 +1,7 @@
 from selenium import webdriver 
 from time import sleep
 import pytest
-#from test_cases.hooks import setup
 from test_cases.hooks import setup_with_login
-#from PageObjects.LoginPage import LoginPage
 from PageObjects.ProductPage import ProductPage
 
 class TestProduct:
