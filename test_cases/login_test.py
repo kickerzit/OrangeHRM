@@ -28,6 +28,17 @@ class TestLogin:
         assert title == "Dashboard"
         sleep(3)
 
+    @pytest.mark.negative_tests
+    def test_login_invalid(self, setup):
+        self.driver = setup
+        login_page = LoginPage(self.driver)
+
+        login_page.input_username("Admi")
+        login_page.input_password("admi123")
+        login_page.click_on_login()
+
+
+
     #aby po testu nezůstal žádnej bordel, nebo se pouze driver zavřel
     def teardown_method(self): #self - předáváme této metodě instanci třídy TestLogin + pojmenujeme
                              #tuto metodu jen teardown, protože už to není test, stane se to po testu.

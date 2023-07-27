@@ -26,9 +26,7 @@ class TestProduct:
         product_page.click_on_logout()
         
         get_login_text = product_page.get_login_text()
-        
         sleep(2)
-
         assert get_login_text == "Login"
 
     def teardown_method(self):
