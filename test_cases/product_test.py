@@ -13,7 +13,7 @@ class TestProduct:
 
         user = product_page.get_user_text()
         sleep(2)
-        assert user == "Marek Janík"
+        assert user == "Paul Collings"
 
     @pytest.mark.positive_tests
     def test_logout(self, setup_with_login):
