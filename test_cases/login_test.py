@@ -20,8 +20,8 @@ class TestLogin:
         #přístup k LoginPage třídě
         login_page = LoginPage(self.driver) #musíme samozřejmě importovat třídu LoginPage
 
-        login_page.input_username("Admin")   #nyní když dáme tečku, vidíme, že máme přístup ke všem metodám ve třídě
-        login_page.input_password("admin123")
+        login_page.input_username("marek.janik")   #nyní když dáme tečku, vidíme, že máme přístup ke všem metodám ve třídě
+        login_page.input_password("qwertz.123")
         login_page.click_on_login()
         title = login_page.get_title_text()
 

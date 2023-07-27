@@ -13,7 +13,7 @@ class TestProduct:
 
         user = product_page.get_user_text()
         sleep(2)
-        assert user == "Paul Collings"
+        assert user == "Marek Janík"
 
     @pytest.mark.positive_tests
     def test_logout(self, setup_with_login):
@@ -29,6 +29,9 @@ class TestProduct:
         sleep(2)
         assert get_login_text == "Login"
 
+    @pytest.mark.positive_tests
+
+    
     def teardown_method(self):
         self.driver.close()
         self.driver.quit()

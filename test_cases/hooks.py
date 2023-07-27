@@ -32,9 +32,9 @@ def setup_with_login(): #používáme v product_test.py
     driver.get("https://opensource-demo.orangehrmlive.com/") 
 
     driver.find_element(By.NAME, "username").clear()
-    driver.find_element(By.NAME, "username").send_keys("Admin")
+    driver.find_element(By.NAME, "username").send_keys("marek.janik")
     driver.find_element(By.NAME, "password").clear()
-    driver.find_element(By.NAME, "password").send_keys("admin123")
+    driver.find_element(By.NAME, "password").send_keys("qwertz.123")
     driver.find_element(By.XPATH, "/html/body/div/div[1]/div/div[1]/div/div[2]/div[2]/form/div[3]/button").click()
 
     return driver #vrací driver
