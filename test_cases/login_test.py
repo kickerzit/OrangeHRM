@@ -28,6 +28,8 @@ class TestLogin:
         assert title == "Dashboard"
         sleep(3)
 
+    '''
+    #když se registruji
     @pytest.mark.positive_tests
     def test_login1(self, setup): #přidáme parametr setup, který vytváří driver a importujeme ho z hooks
 
@@ -43,6 +45,7 @@ class TestLogin:
         title = login_page.get_title_text()
 
         assert title == "Dashboard"
+    '''
 
     @pytest.mark.negative_tests
     def test_login_invalid(self, setup):

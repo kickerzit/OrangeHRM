@@ -29,3 +29,30 @@ class ProductPage:
         
     def get_login_text(self):
         return self.driver.find_element(By.XPATH, "/html/body/div/div[1]/div/div[1]/div/div[2]/h5").text
+    '''
+    def click_on_directory(self):
+        self.driver.find_element(By.LINK_TEXT, "Directory").click()
+
+    def get_directory_text(self):
+        return self.driver.find_element(By.LINK_TEXT, "Directory").text
+    
+    def find_directory_name(self):     
+        return self.driver.find_element(By.XPATH, "/html/body/div/div[1]/div[2]/div[2]/div/div[2]/div[1]/div[2]/div/div[2]/div").text
+    
+    def click_on_directory_name(self):
+        self.driver.find_element(By.XPATH, "/html/body/div/div[1]/div[2]/div[2]/div/div[2]/div/div[2]/div/div[2]/div/p[1]").click()
+
+    def get_email(self):
+        parent_element = self.driver.find_element(By.XPATH, "/html/body/div/div[1]/div[2]/div[2]/div/div[2]/div[2]/div/div")
+        child_element = self.driver.find_element(By.PARTIAL_LINK_TEXT, ".com").text
+        for i in parent_element:
+            if i == child_element:
+                return i
+    '''       
+    
+
+
+
+
+
+    
