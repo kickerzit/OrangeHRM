@@ -4,78 +4,73 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager 
 from selenium.webdriver.common.by import By
+from PageObjects.LoginPage import LoginPage
+from conftest import driver
+from time import sleep
 import pytest
 
 scenarios("../features/login.feature") 
+@pytest.fixture(scope="function")
+def login_page(driver):
+    
+    return LoginPage(driver)
+@given("I am on the login page")    
+# 1. Parametr
+# píšeme zde ten text, co jsme napsali do login.feature za Given - propojení
+# @given: dekorátor - píšeme zde nějakou metodu, která odpovídá prvnímu řádku v login.feature 
+def I_am_on_login_page(login_page):
+    login_page.go_to_login_page()
 
-@pytest.fixture
-def setup():
+@when("I enter valid credentials")
+def enter_correct_username_and_pwd(login_page):
+    login_page.input_username()
+    login_page.input_password()
 
-    global driver #proměnnou určíme jako globální a múžou k ní přistupovat všechny metody
-    options = Options() #mohu zavolat s nejakymi argumenty
-    options.add_argument("start-maximized")
-    #options.add_experimental_option("excludeSwitches", ["enable-automation"])
-    #options.add_experimental_option("excludeSwitches", ["enable-logging"])
-    #options.add_experimental_option("useAutomationExtension", False)
-    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options) #inicializace Chromedriveru
-    driver.implicitly_wait(10)
+@when("I press on the login button") # v login.feature jako And
+def click_on_login(login_page):
+    login_page.click_on_login()
 
+@then("I see that I am logged in")
+def verify_ok_login(login_page):
+    title_text = login_page.get_title_text()
+    sleep(2)
+    if title_text == "Dashboard":
+        assert True
 
-    yield driver #klidně může být return
-                 #yield: driver bude k dispozici po celou dobu, než ty testy proběhnou a až už nebude nic
-                 #co by ten driver používal, tak proběhne quit (o řádek níže)
-    driver.quit()
+    else:
+        print("Test Failed!")
+        assert False
 
-    @pytest.fixture
-    @given("I am on the login page", target_fixture="I_am_on_login") 
-                                     # 1. Parametr
-                                     # píšeme zde ten text, co jsme napsali do login.feature za Given - propojení
-                                     # @given: dekorátor - píšeme zde nějakou metodu, která odpovídá prvnímu řádku v login.feature 
-    def I_am_on_login(setup): # metodě musíme říct, odkud ten driver vezme - proto parametr setup  
-        driver = setup                           
-        driver.get("https://opensource-demo.orangehrmlive.com/")                              # 2. Parametr: target fixture
-                                                                                              # většinou název metody, kterou píšeme
-                                                                                              # target_fixture="I_am_on_login"
-    @when("I enter valid credentials")
-    def enter_correct_username_and_pwd():
-        driver.find_element(By.NAME, "username").clear() #vymazává znaky (kdyby tam náhodou něco bylo)
-        driver.find_element(By.NAME, "username").send_keys("Admin") 
+'''
+@then("I see that I am not logged in")
+def verify_non_ok_login(login_page):
 
-        driver.find_element(By.NAME, "password").clear()
-        driver.find_element(By.NAME, "password").send_keys("admin123")
+    get_error_message = login_page.get_error_message()
 
-    @when("I press on the login button") # v login.feature jako And
-    def click_on_login():
+    sleep(2)
         
-        driver.find_element(By.XPATH, "/html/body/div/div[1]/div/div[1]/div/div[2]/div[2]/form/div[3]/button").click()
+    if get_error_message == "Epic sadface: Username and password do not match any user in this service":
+        assert True
+    
+    else:
+        print(get_error_message) 
+        print("Test Failed!")
+        assert False
+'''
+@when("I enter invalid credentials")
+def enter_incorrect_username_and_pwd():
+    login_page.input_username("wrong_user")
+    login_page.input_password("wrong_password")
 
-    @then("I see that I am logged in")
-    def verify_ok_login():
-        title_text = driver.find_element(By.CLASS_NAME, "oxd-topbar-header-breadcrumb").text
-        if title_text == "Dashboard":
-            assert True
+@then("I see error message")
+def verify_non_ok_login(login_page):
+    
+    get_error_message = login_page.get_error_message()
+    
+    if get_error_message == "Invalid credentials":
+        assert True
 
-        else:
-            print("Test Failed!")
-            assert False
-
-    @when("I enter invalid credentials")
-    def enter_incorrect_username_and_pwd():
-        driver.find_element(By.NAME, "username").clear() #vymazává znaky (kdyby tam náhodou něco bylo)
-        driver.find_element(By.NAME, "username").send_keys("Admi") 
-
-        driver.find_element(By.NAME, "password").clear()
-        driver.find_element(By.NAME, "password").send_keys("admi123")
-
-    @then("I see error message")
-    def verify_non_ok_login():
-        
-        get_error_message = driver.find_element(By.CLASS_NAME, "oxd-text oxd-text--p oxd-alert-content-text").text
-        
-        if get_error_message == "Invalid credentials":
-            assert True
-
-        else:
-            print(get_error_message)
-            print("Test Failed!")
-            assert False
+    else:
+        print(get_error_message)
+        print("Test Failed!")
+        assert False
