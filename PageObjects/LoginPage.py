@@ -9,7 +9,7 @@ class LoginPage():
 
     username_name = "username"  #pozor na odsazení, atribut patří třídě LoginPage
     password_name = "password"
-    login_button_xpath = "/html/body/div/div[1]/div/div[1]/div/div[2]/div[2]/form/div[3]/button"
+    login_button_class = "oxd-button oxd-button--medium oxd-button--main orangehrm-login-button"
     page_title_class = "oxd-topbar-header-breadcrumb"
     error_message = "oxd-text oxd-text--p oxd-alert-content-text"
 
@@ -21,15 +21,14 @@ class LoginPage():
     def input_username(self, username): 
         self.driver.find_element(By.NAME, self.username_name).clear() #vymazává znaky (kdyby tam náhodou něco bylo)
         self.driver.find_element(By.NAME, self.username_name).send_keys(username) #send_keys už voláme jako parametr metody input_username 
-        return self
+        
 
     def input_password(self, password):
         self.driver.find_element(By.NAME, self.password_name).clear()
         self.driver.find_element(By.NAME, self.password_name).send_keys(password)
-        return self
 
     def click_on_login(self): #parametr nemusíme používat, protože to jenom kliká
-        self.driver.find_element(By.XPATH, self.login_button_xpath).click()
+        self.driver.find_element(By.XPATH, self.login_button_class).click()
 
     def get_title_text(self):
         return self.driver.find_element(By.CLASS_NAME, self.page_title_class).text #chceme aby nám metoda přímo vrátila text (return)

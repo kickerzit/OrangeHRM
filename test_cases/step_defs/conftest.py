@@ -12,7 +12,8 @@ def driver():
     options = Options()
     driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
     options.add_argument("start-maximized")
-    
+    options.add_argument("start-fullscreen")
+
     driver.implicitly_wait(10)
 
     yield driver
